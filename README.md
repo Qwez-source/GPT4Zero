@@ -1,3 +1,4 @@
+![logo](https://i.ibb.co/VDsbfq6/photo-2024-08-28-20-27-11.jpg)
 # CmdGpt
 ## About
 The most simplified analogue of gpt4free
