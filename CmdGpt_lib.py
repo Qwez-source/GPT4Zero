@@ -2,24 +2,28 @@ import requests
 import cloudscraper
 import json
 import re
+import random
+import string
 from urllib.parse import quote_plus
+
 
 def ask(question, bot_id=0):
     if bot_id == 1:
-        return ask_with_cloudscraper(question)
+        return ask_gpt3_5(question)
     elif bot_id == 2:
-        return ask_with_blackbox(question)
+        return ask_transformerBB(question)
     else:
-        return ask_with_requests(question)
+        return ask_gpt3(question)
 
-def ask_with_requests(question):
+
+def ask_gpt3(question):
     url = "https://chatgptis.org/wp-admin/admin-ajax.php"
     data = {
-        "_wpnonce": "cbe2bf3e2c",
+        "_wpnonce": "e9dbd06b79",
         "post_id": "60",
         "url": "https://chatgptis.org",
         "action": "wpaicg_chat_shortcode_message",
-        "message": question + " answer the question in the language in which it was asked",
+        "message": question,
         "bot_id": "0"
     }
     headers = {
@@ -27,11 +31,10 @@ def ask_with_requests(question):
         "Origin": "https://chatgptis.org",
         "Referer": "https://chatgptis.org/",
         "Accept": "application/json",
+        "Cookie": "cf_clearance=4ToK8EJNJnooNpaqGvrFrv6c7Ja018tjx4NAbrh_0ko-1724778248-1.2.1.1-V.eq7pqVUSGRqzCoqxHBGLoOX.qfsjtFugoAtUpseLWUgV9WS53NcFq_Pym.liAt8LUi9joBWPHdLm04b6iOjhQWLjnf6rDZjJ1xmRpW3iQ74svtS1v4YwsP8hGIB_gVH.vY4Psj62gtbPOcbpzlE6qDW.LfefB2drXLXMLbIvXXIM6KGRznT2xDEuEvng74ll.kVbmVVY2DoUHJac8_9uMTfPeT_71Nv3IhJgPDmkhitI_GCMkjoh8hfbqDe6jwh3Lj8dUYFXNaKuFBs8aMxekm7R2kB5bIYWZ2rgT32k8dsjSXX3nQT8egCxgm6NW.kW5WIK51FrLxKRHSCEtwYM3OCLjoG1zjZ2bTebL.cT.H04dzQqMxux43rb88k3A6Vot5eKF7nH4pJbQ9kmrBnFJCCl8flyhE.gwb6_v8W0sPYsn5Z6as5NfFMM94zwWm"
     }
-    cookies = {
-        "cf_clearance": "4ToK8EJNJnooNpaqGvrFrv6c7Ja018tjx4NAbrh_0ko-1724778248-1.2.1.1-V.eq7pqVUSGRqzCoqxHBGLoOX.qfsjtFugoAtUpseLWUgV9WS53NcFq_Pym.liAt8LUi9joBWPHdLm04b6iOjhQWLjnf6rDZjJ1xmRpW3iQ74svtS1v4YwsP8hGIB_gVH.vY4Psj62gtbPOcbpzlE6qDW.LfefB2drXLXMLbIvXXIM6KGRznT2xDEuEvng74ll.kVbmVVY2DoUHJac8_9uMTfPeT_71Nv3IhJgPDmkhitI_GCMkjoh8hfbqDe6jwh3Lj8dUYFXNaKuFBs8aMxekm7R2kB5bIYWZ2rgT32k8dsjSXX3nQT8egCxgm6NW.kW5WIK51FrLxKRHSCEtwYM3OCLjoG1zjZ2bTebL.cT.H04dzQqMxux43rb88k3A6Vot5eKF7nH4pJbQ9kmrBnFJCCl8flyhE.gwb6_v8W0sPYsn5Z6as5NfFMM94zwWm",
-    }
-    response = requests.post(url, data=data, headers=headers, cookies=cookies)
+
+    response = requests.post(url, data=data, headers=headers)
     if response.status_code == 200:
         try:
             json_response = response.json()
@@ -44,7 +47,8 @@ def ask_with_requests(question):
     else:
         return f"Response error: {response.status_code}"
 
-def ask_with_cloudscraper(question):
+
+def ask_gpt3_5(question):
     chat_history = ["Human: answer the question in the language in which it was asked"]
 
     scraper = cloudscraper.create_scraper()
@@ -84,7 +88,7 @@ def ask_with_cloudscraper(question):
     except Exception as e:
         return "Ошибка: " + str(e)
 
-def ask_with_blackbox(question):
+def ask_transformerBB(question):
     url = "https://www.blackbox.ai/api/chat"
     data = {
         "messages": [
@@ -120,4 +124,4 @@ def ask_with_blackbox(question):
         cleaned_response = re.sub(r'^\$@\$\w+=.*\$', '', raw_response)
         return cleaned_response.strip()
     else:
-        return "Response error: {response.status_code}"
+        return f"Response error: {response.status_code}"
