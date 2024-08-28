@@ -10,7 +10,7 @@ print(CmdGpt_lib.ask("hello", bot_id=0))
 ### Parameters:
 - message: The message string you want to send to ChatGPT.
 - bot_id: An integer (0, 1, 2) that specifies which ChatGPT instance to use.
-- - 0: GPT 3.5
+- - 0: GPT 3
 - - 1: GPT 3.5
 - - 2: Transformer
 ## Using Image Generation
