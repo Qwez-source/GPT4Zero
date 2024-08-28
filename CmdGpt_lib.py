@@ -38,14 +38,14 @@ def ask_with_requests(question):
             if 'data' in json_response:
                 return json_response['data']
             else:
-                return "Поле 'data' отсутствует в ответе"
+                return " 'data' is missing "
         except ValueError:
-            return "Не удалось разобрать ответ как JSON"
+            return "JSON error"
     else:
-        return f"Ошибка запроса: {response.status_code}"
+        return f"Response error: {response.status_code}"
 
 def ask_with_cloudscraper(question):
-    chat_history = ["Human: привет"]
+    chat_history = ["Human: answer the question in the language in which it was asked"]
 
     scraper = cloudscraper.create_scraper()
 
@@ -88,7 +88,7 @@ def ask_with_blackbox(question):
     url = "https://www.blackbox.ai/api/chat"
     data = {
         "messages": [
-            {"id": "5rT7N42", "content": question + "Ответь на языке на котором был задан вопрос", "role": "user"}
+            {"id": "5rT7N42", "content": question + " answer the question in the language in which it was asked", "role": "user"}
         ],
         "id": "5rT7N42",
         "previewToken": None,
@@ -120,4 +120,4 @@ def ask_with_blackbox(question):
         cleaned_response = re.sub(r'^\$@\$\w+=.*\$', '', raw_response)
         return cleaned_response.strip()
     else:
-        return f"Ошибка: {response.status_code}"
+        return "Response error: {response.status_code}"
