@@ -4,7 +4,15 @@ The most simplified analogue of gpt4free
 ## Using ChatGPT
 ```python
 import CmdGpt_lib
-print(CmdGpt_lib.ask("hello", bot_id=0))
+
+promt = """
+
+hello,
+my dear ai
+
+"""
+
+print(CmdGpt_lib.ask(promt, bot_id=0))
 # id - 0, 1, 2
 ```
 ### Parameters:
