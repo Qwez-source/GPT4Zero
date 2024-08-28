@@ -22,13 +22,13 @@ class Text2ImageAPI:
             else:
                 raise ValueError("Model list is empty")
         except Exception as e:
-            print(f"Ошибка при получении модели: {e}")
+            print(f"Error: {e}")
             return None
 
     def generate(self, prompt, width=1024, height=1024, negative="", style=""):
         model_id = self.get_model()
         if not model_id:
-            print("Не удалось получить идентификатор модели")
+            print("Error")
             return None
 
         params = {
@@ -56,7 +56,7 @@ class Text2ImageAPI:
                 raise ValueError("UUID not found in response")
             return self.check_generation(uuid)
         except Exception as e:
-            print(f"Ошибка при генерации изображения: {e}")
+            print(f"Error: {e}")
             return None
 
     def check_generation(self, request_id, attempts=10, delay=10):
@@ -68,14 +68,14 @@ class Text2ImageAPI:
                 if data['status'] == 'DONE':
                     return data.get('images', [])
                 elif data['status'] == 'FAILED':
-                    print("Ошибка генерации изображения")
+                    print("Error")
                     return None
             except Exception as e:
-                print(f"Ошибка при проверке статуса генерации: {e}")
+                print(f"Error: {e}")
 
             attempts -= 1
             time.sleep(delay)
-        print("Превышено время ожидания")
+        print("Timed out")
         return None
 
     def save_image(self, image_data, file_name, file_path=None):
@@ -88,7 +88,7 @@ class Text2ImageAPI:
                 file.write(base64.b64decode(image_data))
 
         except Exception as e:
-            print(f"Ошибка при сохранении изображения: {e}")
+            print(f"Error: {e}")
 
 def generate(prompt, width=1024, height=1024, negative="", style=""):
     api = Text2ImageAPI('https://api-key.fusionbrain.ai/', '582AC9DB39EC26657C8DC5363FA298CE', 'A1B55EB2DF8E9FC08268AB5A3871D093')
