@@ -24,13 +24,13 @@ print(CmdGpt_lib.ask(promt, bot_id=0))
 - - 2: Transformer
 ## Using Image Generation
 ```python
-from CmdGenerate_lib import generate, save_image
+from CmdGpt import CmdGenerate_lib
 
 # generating image in base64 string
-image_data = generate("cat", 1024, 1024, "negative promt", "style") #styles - KANDINSKY, DEFAULT, UHD, ANIME. You can see styles on https://cdn.fusionbrain.ai/static/styles/key
+image_data = CmdGenerate_lib.generate("cat", 1024, 1024, "negative promt", "style") #styles - KANDINSKY, DEFAULT, UHD, ANIME. You can see styles on https://cdn.fusionbrain.ai/static/styles/key
 # decrypt
 if image_data:
-    save_image(image_data, "name.png", "Path") # If you do not specify a saving path, the file will be saved in the same directory
+    CmdGenerate_lib.save_image(image_data, "name.png", "Path") # If you do not specify a saving path, the file will be saved in the same directory
 ```
 ### generate Function Parameters:
 - prompt: A string that specifies what kind of image to generate.
