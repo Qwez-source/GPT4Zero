@@ -1,8 +1,8 @@
-![logo](https://i.ibb.co/VDsbfq6/photo-2024-08-28-20-27-11.jpg)
-
 # CmdGpt 🚀
 
 Welcome to **CmdGpt**, a simplified alternative to GPT4Free!
+
+![logo](https://i.ibb.co/VDsbfq6/photo-2024-08-28-20-27-11.jpg)
 
 ## 📚 Table of Contents
 - [About](#about)
@@ -15,7 +15,7 @@ Welcome to **CmdGpt**, a simplified alternative to GPT4Free!
 
 ## About
 
-CmdGpt is designed to be a user-friendly alternative to GPT4Free, making it easier to interact with different GPT models. 
+CmdGpt is designed to be a user-friendly alternative to GPT4Free. 
 
 ## Using ChatGPT 🤖
 
