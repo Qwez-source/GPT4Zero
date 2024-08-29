@@ -1,11 +1,8 @@
 import requests
-import cloudscraper
 import json
+import cloudscraper
 import re
-import random
-import string
 from urllib.parse import quote_plus
-
 
 def ask(question, bot_id=0):
     if bot_id == 1:
@@ -14,7 +11,6 @@ def ask(question, bot_id=0):
         return ask_transformerBB(question)
     else:
         return ask_gpt3(question)
-
 
 def ask_gpt3(question):
     url = "https://chatgptis.org/wp-admin/admin-ajax.php"
@@ -47,46 +43,34 @@ def ask_gpt3(question):
     else:
         return f"Response error: {response.status_code}"
 
-
 def ask_gpt3_5(question):
-    chat_history = ["Human: answer the question in the language in which it was asked"]
+    url = "https://chatbot-ji1z.onrender.com/chatbot-ji1z"
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Origin": "https://seoschmiede.at",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+    }
 
-    scraper = cloudscraper.create_scraper()
-
-    encoded_message = quote_plus(question)
-    encoded_chat_history = quote_plus(json.dumps(chat_history))
-
-    url = (f"https://chatgptfree.ai/wp-admin/admin-ajax.php?_wpnonce=839b9c39eb"
-           f"&post_id=6&url=https%3A%2F%2Fchatgptfree.ai"
-           f"&action=wpaicg_chat_shortcode_message&message={encoded_message}"
-           f"&bot_id=0&chatbot_identity=shortcode&wpaicg_chat_client_id=ShUrGmytYd"
-           f"&wpaicg_chat_history={encoded_chat_history}")
+    data = {
+        "messages": [
+            {"role": "user", "content": question}
+        ]
+    }
 
     try:
-        response = scraper.get(url, stream=True)
-        full_response = ""
-
-        for chunk in response.iter_lines():
-            if chunk:
-                try:
-                    chunk_str = chunk.decode('utf-8')
-
-                    if chunk_str.startswith("data: "):
-                        json_data = chunk_str[5:]
-                        data = json.loads(json_data)
-
-                        if "choices" in data and len(data["choices"]) > 0:
-                            choice = data["choices"][0]
-                            if "delta" in choice and "content" in choice["delta"]:
-                                full_response += choice["delta"]["content"]
-
-                except json.JSONDecodeError:
-                    pass
-
-        return full_response
-
-    except Exception as e:
-        return "Ошибка: " + str(e)
+        response = requests.post(url, headers=headers, data=json.dumps(data))
+        response.raise_for_status() 
+        response_json = response.json()
+        if 'choices' in response_json and len(response_json['choices']) > 0:
+            readable_text = response_json['choices'][0]['message']['content']
+            return readable_text
+        else:
+            return "No choices found in response"
+    except requests.exceptions.RequestException as e:
+        return f"Request error: {e}"
+    except ValueError:
+        return "Error decoding JSON response"
 
 def ask_transformerBB(question):
     url = "https://www.blackbox.ai/api/chat"
