@@ -6,12 +6,12 @@ Welcome to **CmdGpt**, a simplified alternative to GPT4Free!
 
 ## 📚 Table of Contents
 - [About](#about)
-- [Using ChatGPT](#using-chatgpt-🤖)
+- [Using ChatGPT 🤖](#using-chatgpt-🤖)
   - [Parameters](#parameters)
-- [Using Image Generation](#using-image-generation-🎨)
+- [Using Image Generation 🎨](#using-image-generation-🎨)
   - [generate Function Parameters](#generate-function-parameters)
   - [save_image Function Parameters](#save_image-function-parameters)
-- [Credits](#credits-🙌)
+- [Credits 🙌](#credits-🙌)
 
 ## About
 
