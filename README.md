@@ -4,7 +4,7 @@
 The most simplified analogue of gpt4free
 ## Using ChatGPT
 ```python
-import CmdGpt_lib
+from CmdGpt import CmdGpt_lib
 
 promt = """
 
