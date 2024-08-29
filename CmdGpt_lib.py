@@ -1,8 +1,6 @@
 import requests
 import json
-import cloudscraper
 import re
-from urllib.parse import quote_plus
 
 def ask(question, bot_id=0):
     if bot_id == 1:
@@ -10,38 +8,40 @@ def ask(question, bot_id=0):
     elif bot_id == 2:
         return ask_transformerBB(question)
     else:
-        return ask_gpt3(question)
+        return ask_gpt3_5_2(question)
 
-def ask_gpt3(question):
-    url = "https://chatgptis.org/wp-admin/admin-ajax.php"
-    data = {
-        "_wpnonce": "e9dbd06b79",
-        "post_id": "60",
-        "url": "https://chatgptis.org",
-        "action": "wpaicg_chat_shortcode_message",
-        "message": question,
-        "bot_id": "0"
-    }
+def ask_gpt3_5_2(question):
+    url = "https://ai-chats.org/chat/send2/"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-        "Origin": "https://chatgptis.org",
-        "Referer": "https://chatgptis.org/",
-        "Accept": "application/json",
-        "Cookie": "cf_clearance=4ToK8EJNJnooNpaqGvrFrv6c7Ja018tjx4NAbrh_0ko-1724778248-1.2.1.1-V.eq7pqVUSGRqzCoqxHBGLoOX.qfsjtFugoAtUpseLWUgV9WS53NcFq_Pym.liAt8LUi9joBWPHdLm04b6iOjhQWLjnf6rDZjJ1xmRpW3iQ74svtS1v4YwsP8hGIB_gVH.vY4Psj62gtbPOcbpzlE6qDW.LfefB2drXLXMLbIvXXIM6KGRznT2xDEuEvng74ll.kVbmVVY2DoUHJac8_9uMTfPeT_71Nv3IhJgPDmkhitI_GCMkjoh8hfbqDe6jwh3Lj8dUYFXNaKuFBs8aMxekm7R2kB5bIYWZ2rgT32k8dsjSXX3nQT8egCxgm6NW.kW5WIK51FrLxKRHSCEtwYM3OCLjoG1zjZ2bTebL.cT.H04dzQqMxux43rb88k3A6Vot5eKF7nH4pJbQ9kmrBnFJCCl8flyhE.gwb6_v8W0sPYsn5Z6as5NfFMM94zwWm"
+        "Accept": "application/json, text/event-stream",
+        "Content-Type": "application/json",
+        "Origin": "https://ai-chats.org",
+        "Referer": "https://ai-chats.org/chat/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+    }
+    
+    data = {
+        "messagesHistory": [{"id": "683d7cc3-592f-4b3a-9648-1779c2d2c264", "from": "you", "content": question}],
+        "type": "chat"
     }
 
-    response = requests.post(url, data=data, headers=headers)
-    if response.status_code == 200:
-        try:
-            json_response = response.json()
-            if 'data' in json_response:
-                return json_response['data']
-            else:
-                return " 'data' is missing "
-        except ValueError:
-            return "JSON error"
-    else:
-        return f"Response error: {response.status_code}"
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(data))
+        response.raise_for_status()
+
+        response_text = response.text
+        # Извлекаем только текст из data
+        parsed_text = ''.join(
+            line.split(': ')[1]
+            for line in response_text.splitlines()
+            if line.startswith('data: ') and line.split(': ')[1].strip()
+        )
+        return parsed_text
+
+    except requests.exceptions.RequestException as e:
+        return f"Request error: {e}"
+    except ValueError:
+        return "Error decoding response"
 
 def ask_gpt3_5(question):
     url = "https://chatbot-ji1z.onrender.com/chatbot-ji1z"
