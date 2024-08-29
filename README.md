@@ -51,5 +51,5 @@ if image_data:
 ## Credits
 - Kandinsky [image generator] - https://fusionbrain.ai/
 - ChatGPT [0 id] - https://chatgptis.org/
-- ChatGPT [1 id] - https://chatgptfree.ai/
+- ChatGPT [1 id] - https://seoschmiede.at/en/aitools/chatgpt-tool/
 - ChatGPT [2 id] - https://www.blackbox.ai/
