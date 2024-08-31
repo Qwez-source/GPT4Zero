@@ -258,10 +258,10 @@
 
         </div>
         <div class="chat-input-container">
-            <input type="text" id="chat-input" class="chat-input" placeholder="Введите ваше сообщение...">
-            <button id="send-button" class="send-button">Отправить</button>
+            <input type="text" id="chat-input" class="chat-input" placeholder="Enter your message...">
+            <button id="send-button" class="send-button">Send</button>
         </div>
-        <div class="clear-chat" id="clear-chat">Очистить чат</div>
+        <div class="clear-chat" id="clear-chat">Clear chat</div>
     </div>
 
     <script>
@@ -301,10 +301,10 @@
                     var code = block.innerText;
                     navigator.clipboard.writeText(code).then(function() {
                         copyIcon.src = 'https://cdn.icon-icons.com/icons2/916/PNG/512/Checkmark_icon-icons.com_71846.png';
-                        copyIcon.title = 'Код скопирован!';
+                        copyIcon.title = 'Copied!';
                         setTimeout(function() {
                             copyIcon.src = 'https://cdn-icons-png.flaticon.com/512/1621/1621635.png';
-                            copyIcon.title = 'Скопировать код';
+                            copyIcon.title = 'Copy code';
                         }, 2000);
                     });
                 });
