@@ -86,6 +86,17 @@
             background-color: #4b5d79;
             cursor: not-allowed;
         }
+        .clear-chat {
+            text-align: center;
+            padding: 10px;
+            background-color: #d9534f;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .clear-chat:hover {
+            background-color: #c9302c;
+        }
         .chat-message {
             display: flex;
             align-items: flex-start;
@@ -200,12 +211,13 @@
     <div class="chat-container">
         <div class="chat-header">WebGpt</div>
         <div class="chat-box" id="chat-box">
-
+            <!-- Сообщения чата -->
         </div>
         <div class="chat-input-container">
             <input type="text" id="chat-input" class="chat-input" placeholder="Введите ваше сообщение...">
             <button id="send-button" class="send-button">Отправить</button>
         </div>
+        <div class="clear-chat" id="clear-chat">Очистить чат</div>
     </div>
 
     <script>
@@ -291,6 +303,10 @@
                 });
             }
         }
+
+        document.getElementById('clear-chat').addEventListener('click', function() {
+            document.getElementById('chat-box').innerHTML = '';
+        });
     </script>
 </body>
 </html>
