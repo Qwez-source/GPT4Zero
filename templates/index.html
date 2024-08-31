@@ -205,17 +205,35 @@
         a:hover {
             text-decoration: underline;
         }
+
         .copy-icon {
             position: absolute;
             top: 10px;
             right: 10px;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             cursor: pointer;
             opacity: 0.7;
             transition: opacity 0.3s;
+            filter: invert(1);
         }
+
         .copy-icon:hover {
+            opacity: 1;
+        }
+
+        .copied-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            opacity: 1;
+            transition: opacity 0.3s;
+            filter: invert(65%) sepia(85%) saturate(398%) hue-rotate(97deg) brightness(95%) contrast(95%);
+        }
+        .copied-icon:hover {
             opacity: 1;
         }
 
