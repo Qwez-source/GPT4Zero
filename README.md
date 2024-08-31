@@ -23,7 +23,7 @@ GPT4Zero is designed to be a user-friendly alternative to GPT4Free.
 Here’s how you can use GPT4Zero to interact with ChatGPT:
 
 ```python
-from CmdGpt import CmdGpt_lib
+from GPT4Zero import CmdGpt_lib
 
 promt = """
 hello,
@@ -46,7 +46,7 @@ print(CmdGpt_lib.ask(promt, bot_id=0))
 Generate images with ease using GPT4Zero:
 
 ```python
-from CmdGpt import CmdGenerate_lib
+from GPT4Zero import CmdGenerate_lib
 
 # Generating image in base64 string
 image_data = CmdGenerate_lib.generate("cat", 1024, 1024, "negative prompt", "style") 
