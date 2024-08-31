@@ -39,7 +39,7 @@ print(CmdGpt_lib.ask(promt, bot_id=0))
 - **bot_id**: An integer (0, 1, 2) specifying which ChatGPT instance to use:
   - `0`: GPT 3
   - `1`: GPT 3.5
-  - `2`: Transformer
+  - `2`: Blackbox
 
 ## Using Image Generation 🎨
 
