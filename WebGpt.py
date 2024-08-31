@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 import requests
 import json
+import re
 
 app = Flask(__name__)
 
@@ -33,6 +34,49 @@ def ask_gpt3_5(question):
     except ValueError:
         return "Error decoding JSON response"
 
+def ask_transformerBB(question):
+    url = "https://www.blackbox.ai/api/chat"
+    data = {
+        "messages": [
+            {"id": "5rT7N42", "content": question + " answer the question in the language in which it was asked", "role": "user"}
+        ],
+        "id": "5rT7N42",
+        "previewToken": None,
+        "userId": None,
+        "codeModelMode": True,
+        "agentMode": {},
+        "trendingAgentMode": {},
+        "isMicMode": False,
+        "maxTokens": 1024,
+        "isChromeExt": False,
+        "githubToken": None,
+        "clickedAnswer2": False,
+        "clickedAnswer3": False,
+        "clickedForceWebSearch": False,
+        "visitFromDelta": False,
+        "mobileClient": False
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+        "Origin": "https://www.blackbox.ai",
+        "Referer": "https://www.blackbox.ai/"
+    }
+    
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(data))
+        response.raise_for_status()
+        
+        if response.status_code == 200:
+            raw_response = response.content.decode('utf-8')
+            cleaned_response = re.sub(r'^\$@\$\w+=.*\$', '', raw_response)
+            return cleaned_response.strip()
+        else:
+            return f"Response error: {response.status_code}"
+    except requests.exceptions.RequestException as e:
+        return f"Request error: {e}"
+    
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -40,7 +84,13 @@ def home():
 @app.route('/ask', methods=['POST'])
 def ask():
     question = request.form.get('question', '')
-    answer = ask_gpt3_5(question)
+    model = request.form.get('model', 'gpt3.5')
+    
+    if model == 'transformerBB':
+        answer = ask_transformerBB(question)
+    else:
+        answer = ask_gpt3_5(question)
+    
     return jsonify({'answer': answer})
 
 def runGUI():
