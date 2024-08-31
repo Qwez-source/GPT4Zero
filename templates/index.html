@@ -189,6 +189,7 @@
             overflow-x: auto;
             margin: 10px 0;
             box-sizing: border-box;
+            position: relative;
         }
         code {
             background-color: #2c2f33;
@@ -204,14 +205,57 @@
         a:hover {
             text-decoration: underline;
         }
+        .copy-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .copy-icon:hover {
+            opacity: 1;
+        }
+
+        .model-select {
+            width: 90%;
+            max-width: 300px;
+            padding: 8px;
+            background-color: #40444b;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        .model-select:focus {
+            outline: none;
+        }
+
+        .select-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="chat-container">
         <div class="chat-header">WebGpt</div>
+        <div class="select-container">
+            <select id="model-select" class="model-select">
+                <option value="gpt3.5">GPT-3.5</option>
+                <option value="transformerBB">BlackBox</option>
+            </select>
+        </div>
         <div class="chat-box" id="chat-box">
-            <!-- Сообщения чата -->
+
         </div>
         <div class="chat-input-container">
             <input type="text" id="chat-input" class="chat-input" placeholder="Введите ваше сообщение...">
@@ -244,6 +288,27 @@
             messageElement.innerHTML = messageHtml;
             chatBox.appendChild(messageElement);
             chatBox.scrollTop = chatBox.scrollHeight;
+
+            var codeBlocks = messageElement.querySelectorAll('pre');
+            codeBlocks.forEach(block => {
+                var copyIcon = document.createElement('img');
+                copyIcon.src = 'https://cdn-icons-png.flaticon.com/512/1621/1621635.png';
+                copyIcon.className = 'copy-icon';
+                copyIcon.title = 'Скопировать код';
+                block.appendChild(copyIcon);
+
+                copyIcon.addEventListener('click', function() {
+                    var code = block.innerText;
+                    navigator.clipboard.writeText(code).then(function() {
+                        copyIcon.src = 'https://cdn.icon-icons.com/icons2/916/PNG/512/Checkmark_icon-icons.com_71846.png';
+                        copyIcon.title = 'Код скопирован!';
+                        setTimeout(function() {
+                            copyIcon.src = 'https://cdn-icons-png.flaticon.com/512/1621/1621635.png';
+                            copyIcon.title = 'Скопировать код';
+                        }, 2000);
+                    });
+                });
+            });
         }
 
         function showTypingIndicator() {
@@ -277,6 +342,8 @@
         function sendMessage() {
             var input = document.getElementById('chat-input');
             var message = input.value.trim();
+            var model = document.getElementById('model-select').value;
+            
             if (message) {
                 addMessageToChat('user', message);
                 input.value = '';
@@ -288,7 +355,7 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: 'question=' + encodeURIComponent(message)
+                    body: 'question=' + encodeURIComponent(message) + '&model=' + encodeURIComponent(model)
                 })
                 .then(response => response.json())
                 .then(data => {
