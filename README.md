@@ -1,8 +1,8 @@
-# CmdGpt 🚀
+# GPT4Zero 🚀
 
-Welcome to **CmdGpt**, a simplified alternative to GPT4Free!
+Welcome to **GPT4Zero**, a simplified alternative to GPT4Free!
 
-![logo](https://i.ibb.co/VDsbfq6/photo-2024-08-28-20-27-11.jpg)
+![logo](https://i.ibb.co/3SQqx9v/photo-2024-08-31-12-14-53.jpg)
 
 ## 📚 Table of Contents
 - [About](#about)
@@ -15,11 +15,11 @@ Welcome to **CmdGpt**, a simplified alternative to GPT4Free!
 
 ## About
 
-CmdGpt is designed to be a user-friendly alternative to GPT4Free. 
+GPT4Zero is designed to be a user-friendly alternative to GPT4Free. 
 
 ## Using ChatGPT 🤖
 
-Here’s how you can use CmdGpt to interact with ChatGPT:
+Here’s how you can use GPT4Zero to interact with ChatGPT:
 
 ```python
 from CmdGpt import CmdGpt_lib
@@ -42,7 +42,7 @@ print(CmdGpt_lib.ask(promt, bot_id=0))
 
 ## Using Image Generation 🎨
 
-Generate images with ease using CmdGpt:
+Generate images with ease using GPT4Zero:
 
 ```python
 from CmdGpt import CmdGenerate_lib
