@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebGpt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2c2f33;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .chat-container {
+            width: 600px;
+            max-width: 90%;
+            background-color: #23272a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        .chat-header {
+            background-color: #7289da;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-bottom: 2px solid #2c2f33; /* Разделение верхней границы чата */
+        }
+        .chat-box {
+            height: 400px;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #2c2f33 0%, #23272a 100%);
+            padding: 15px;
+            box-sizing: border-box;
+            color: #ffffff;
+            position: relative;
+            scrollbar-width: thin;
+            scrollbar-color: #7289da #23272a;
+        }
+        .chat-box::-webkit-scrollbar {
+            width: 8px;
+        }
+        .chat-box::-webkit-scrollbar-thumb {
+            background-color: #7289da;
+            border-radius: 4px;
+        }
+        .chat-box::-webkit-scrollbar-track {
+            background-color: #23272a;
+        }
+        .chat-input-container {
+            display: flex;
+            padding: 15px;
+            background-color: #23272a;
+            border-top: 1px solid #2c2f33;
+        }
+        .chat-input {
+            flex: 1;
+            padding: 15px;
+            background-color: #40444b;
+            border: none;
+            color: #ffffff;
+            border-radius: 5px;
+            margin-right: 15px;
+            box-sizing: border-box;
+        }
+        .chat-input:focus {
+            outline: none;
+        }
+        .send-button {
+            padding: 15px 25px;
+            background-color: #7289da;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .send-button:hover {
+            background-color: #5a6abf;
+        }
+        .send-button:disabled {
+            background-color: #4b5d79;
+            cursor: not-allowed;
+        }
+        .chat-message {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+            position: relative;
+            overflow: hidden;
+        }
+        .user-message {
+            background-color: #7289da;
+            color: #ffffff;
+            margin-left: auto;
+            border-bottom-right-radius: 0;
+            justify-content: flex-end;
+        }
+        .bot-message {
+            background-color: #40444b;
+            color: #ffffff;
+            margin-right: auto;
+            border-bottom-left-radius: 0;
+            justify-content: flex-start;
+        }
+        .message-content {
+            position: relative;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #2c2f33;
+            overflow: hidden;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .message-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        .typing-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            height: 24px;
+        }
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            margin: 0 2px;
+            background-color: #7289da;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typing 1.4s infinite both;
+        }
+        .typing-indicator span:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.8);
+                opacity: 0.3;
+            }
+        }
+        pre {
+            background-color: #23272a;
+            color: #e6e6e6;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        code {
+            background-color: #2c2f33;
+            color: #e6e6e6;
+            padding: 2px 4px;
+            border-radius: 4px;
+            margin: 0;
+        }
+        a {
+            color: #7289da;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">WebGpt</div>
+        <div class="chat-box" id="chat-box">
+            <!-- Здесь будут появляться сообщения -->
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Введите ваше сообщение...">
+            <button id="send-button" class="send-button">Отправить</button>
+        </div>
+    </div>
+
+    <script>
+        function addMessageToChat(sender, message) {
+            var chatBox = document.getElementById('chat-box');
+            var messageElement = document.createElement('div');
+            messageElement.className = 'chat-message ' + (sender === 'user' ? 'user-message' : 'bot-message');
+            
+            var messageContent;
+
+            if (sender === 'bot') {
+                messageContent = marked.parse(message, {
+                    gfm: true,
+                    breaks: true,
+                    mangle: false,
+                    headerIds: false,
+                    sanitizer: false
+                });
+            } else {
+                messageContent = message;
+            }
+
+            var messageHtml = `<div class="message-content">${messageContent}</div>`;
+            messageElement.innerHTML = messageHtml;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            var chatBox = document.getElementById('chat-box');
+            var typingIndicator = document.createElement('div');
+            typingIndicator.id = 'typing-indicator';
+            typingIndicator.className = 'typing-indicator';
+            typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+            chatBox.appendChild(typingIndicator);
+            typingIndicator.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+
+        function hideTypingIndicator() {
+            var typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        document.getElementById('send-button').addEventListener('click', function() {
+            sendMessage();
+        });
+
+        document.getElementById('chat-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            var input = document.getElementById('chat-input');
+            var message = input.value.trim();
+            if (message) {
+                addMessageToChat('user', message);
+                input.value = '';
+                document.getElementById('send-button').disabled = true;
+                showTypingIndicator();
+                
+                fetch('/ask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'question=' + encodeURIComponent(message)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    hideTypingIndicator();
+                    addMessageToChat('bot', data.answer);
+                    document.getElementById('send-button').disabled = false;
+                })
+                .catch(error => {
+                    hideTypingIndicator();
+                    document.getElementById('send-button').disabled = false;
+                    console.error('Error:', error);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+
