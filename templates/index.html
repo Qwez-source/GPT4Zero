@@ -322,27 +322,23 @@
 
             var codeBlocks = messageElement.querySelectorAll('pre');
         codeBlocks.forEach(block => {
-            // Создаём контейнер для блока кода и иконки копирования
+            
             var wrapper = document.createElement('div');
             wrapper.className = 'code-wrapper';
             wrapper.style.position = 'relative';
             wrapper.style.display = 'inline-block';
             wrapper.style.width = '100%';
 
-            // Вставляем блок кода в контейнер
             block.parentNode.insertBefore(wrapper, block);
             wrapper.appendChild(block);
 
-            // Создаём иконку копирования
             var copyIcon = document.createElement('img');
             copyIcon.src = 'https://cdn-icons-png.flaticon.com/512/1621/1621635.png';
             copyIcon.className = 'copy-icon-fixed';
             copyIcon.title = 'Скопировать код';
 
-            // Добавляем иконку в контейнер
             wrapper.appendChild(copyIcon);
 
-            // Обработчик клика по иконке
             copyIcon.addEventListener('click', function() {
                 var code = block.innerText;
                 navigator.clipboard.writeText(code).then(function() {
