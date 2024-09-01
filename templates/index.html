@@ -198,6 +198,13 @@
             border-radius: 4px;
             margin: 0;
         }
+
+        .code-wrapper {
+         position: relative;
+         display: inline-block;
+         width: 100%;
+        }
+
         a {
             color: #7289da;
             text-decoration: none;
@@ -206,21 +213,26 @@
             text-decoration: underline;
         }
 
-        .copy-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-            filter: invert(1);
+        .copy-icon-fixed {
+         position: absolute;
+         top: 18px;
+         right: 10px;
+         width: 24px;
+         height: 24px;
+         cursor: pointer;
+         opacity: 0.7;
+         transition: opacity 0.3s;
+         filter: invert(1);
+         z-index: 10;
+         background-color: transparent;
+         border-radius: 4px;
         }
 
-        .copy-icon:hover {
+
+        .copy-icon-fixed:hover {
             opacity: 1;
         }
+        
 
         .copied-icon {
             position: absolute;
@@ -232,6 +244,7 @@
             opacity: 1;
             transition: opacity 0.3s;
             filter: invert(65%) sepia(85%) saturate(398%) hue-rotate(97deg) brightness(95%) contrast(95%);
+            z-index: 1;
         }
         .copied-icon:hover {
             opacity: 1;
@@ -308,26 +321,43 @@
             chatBox.scrollTop = chatBox.scrollHeight;
 
             var codeBlocks = messageElement.querySelectorAll('pre');
-            codeBlocks.forEach(block => {
-                var copyIcon = document.createElement('img');
-                copyIcon.src = 'https://cdn-icons-png.flaticon.com/512/1621/1621635.png';
-                copyIcon.className = 'copy-icon';
-                copyIcon.title = 'Скопировать код';
-                block.appendChild(copyIcon);
+        codeBlocks.forEach(block => {
+            // Создаём контейнер для блока кода и иконки копирования
+            var wrapper = document.createElement('div');
+            wrapper.className = 'code-wrapper';
+            wrapper.style.position = 'relative';
+            wrapper.style.display = 'inline-block';
+            wrapper.style.width = '100%';
 
-                copyIcon.addEventListener('click', function() {
-                    var code = block.innerText;
-                    navigator.clipboard.writeText(code).then(function() {
-                        copyIcon.src = 'https://cdn.icon-icons.com/icons2/916/PNG/512/Checkmark_icon-icons.com_71846.png';
-                        copyIcon.title = 'Copied!';
-                        setTimeout(function() {
-                            copyIcon.src = 'https://cdn-icons-png.flaticon.com/512/1621/1621635.png';
-                            copyIcon.title = 'Copy code';
-                        }, 2000);
-                    });
+            // Вставляем блок кода в контейнер
+            block.parentNode.insertBefore(wrapper, block);
+            wrapper.appendChild(block);
+
+            // Создаём иконку копирования
+            var copyIcon = document.createElement('img');
+            copyIcon.src = 'https://cdn-icons-png.flaticon.com/512/1621/1621635.png';
+            copyIcon.className = 'copy-icon-fixed';
+            copyIcon.title = 'Скопировать код';
+
+            // Добавляем иконку в контейнер
+            wrapper.appendChild(copyIcon);
+
+            // Обработчик клика по иконке
+            copyIcon.addEventListener('click', function() {
+                var code = block.innerText;
+                navigator.clipboard.writeText(code).then(function() {
+                    copyIcon.src = 'https://cdn.icon-icons.com/icons2/916/PNG/512/Checkmark_icon-icons.com_71846.png';
+                    copyIcon.title = 'Скопировано!';
+                    setTimeout(function() {
+                        copyIcon.src = 'https://cdn-icons-png.flaticon.com/512/1621/1621635.png';
+                        copyIcon.title = 'Скопировать код';
+                    }, 2000);
+                }).catch(function(err) {
+                    console.error('Ошибка копирования: ', err);
                 });
             });
-        }
+        });
+    }
 
         function showTypingIndicator() {
             var chatBox = document.getElementById('chat-box');
