@@ -76,7 +76,7 @@ if image_data:
 - **filename**: The name under which the image file will be saved.
 - **path**: The directory path where the image will be saved. If not specified, the image will be saved in the current directory.
 
-### Using via Web Requests 🌐
+## Using via Web Requests 🌐
 
 GPT4Zero also allows you to interact with the models via web requests.
 
