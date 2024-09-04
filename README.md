@@ -94,7 +94,7 @@ GPT4Zero also allows you to interact with the models via web requests.
      ```
    - Replace `model_name` with either `gpt3_5` (default) or `transformerBB`.
 
-#### Python Example:
+### Python Example:
 
 ```python
 import requests
