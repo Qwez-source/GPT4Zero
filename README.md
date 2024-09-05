@@ -11,7 +11,7 @@ Welcome to **GPT4Zero**, a simplified alternative to GPT4Free!
 - [Using Image Generation ](#using-image-generation-)
   - [generate Function Parameters](#generate-function-parameters)
   - [save_image Function Parameters](#save_image-function-parameters)
-- [Using via Web Requests](#using-via-web-requests)
+- [Using via Web Requests](#using-via-web-requests-)
   - [Python code example](#python-example)
 - [Using WebUI](#using-webui-)
 - [Credits](#credits-)
