@@ -75,40 +75,37 @@ def ask_gpt3_5(question):
     except ValueError:
         return "Error decoding JSON response"
 
-def ask_transformerBB(question):
-    url = "https://www.blackbox.ai/api/chat"
-    data = {
-        "messages": [
-            {"id": "5rT7N42", "content": question + " answer the question in the language in which it was asked", "role": "user"}
-        ],
-        "id": "5rT7N42",
-        "previewToken": None,
-        "userId": None,
-        "codeModelMode": True,
-        "agentMode": {},
-        "trendingAgentMode": {},
-        "isMicMode": False,
-        "maxTokens": 1024,
-        "isChromeExt": False,
-        "githubToken": None,
-        "clickedAnswer2": False,
-        "clickedAnswer3": False,
-        "clickedForceWebSearch": False,
-        "visitFromDelta": False,
-        "mobileClient": False
-    }
+def ask_gemini(question):
+    session_id = str(uuid.uuid4())
+    
+    url = "https://data.toolbaz.com/writer.php"
     headers = {
-        "Content-Type": "application/json",
-        "Accept": "*/*",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-        "Origin": "https://www.blackbox.ai",
-        "Referer": "https://www.blackbox.ai/"
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+        "connection": "keep-alive",
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "host": "data.toolbaz.com",
+        "origin": "https://toolbaz.com",
+        "referer": "https://toolbaz.com/",
+        "sec-ch-ua": '"Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Windows"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-site",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
     }
-    response = requests.post(url, headers=headers, data=json.dumps(data))
-
-    if response.status_code == 200:
-        raw_response = response.content.decode('utf-8')
-        cleaned_response = re.sub(r'^\$@\$\w+=.*\$', '', raw_response)
-        return cleaned_response.strip()
-    else:
-        return f"Response error: {response.status_code}"
+    
+    data = {
+        "text": question,
+        "model": "gemini-1.5-flash",
+        "session_id": session_id
+    }
+    
+    response = requests.post(url, headers=headers, data=data)
+    
+    response_text = response.text
+    clean_text = re.sub(r'\[.*?\]', '', response_text).strip()
+    
+    return clean_text
