@@ -13,7 +13,7 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-TOKEN = '6843119870:AAEQSRNp9pxRszKuiKf07url6DlalbbZQ9M'
+TOKEN = 'TELEGRAM_BOT_TOKEN'
 
 class Text2ImageAPI:
     def __init__(self, url, api_key, secret_key):
