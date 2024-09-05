@@ -44,7 +44,7 @@ print(CmdGpt_lib.ask(promt, bot_id=0))
   - `2`: Blackbox
  
 > [!TIP]
->  Choose the appropriate bot_id based on the model you want to interact with. Each model offers different capabilities and performance levels. Blackbox is slower than gpt, but in some ways it is smarter.
+>  Choose the appropriate bot_id based on the model you want to interact with. Each model offers different capabilities and performance levels.
 
 ## Using Image Generation 🎨
 
@@ -109,7 +109,7 @@ GPT4Zero also allows you to interact with the models via web requests.
    - Replace `model_name` with either `gpt3_5` (default) or `transformerBB`.
 
 > [!TIP]
-> Blackbox is slower than gpt, but in some ways it is smarter.
+> Choose the appropriate bot_id based on the model you want to interact with. Each model offers different capabilities and performance levels.
 
 ### Python Example:
 
