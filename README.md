@@ -81,7 +81,13 @@ if image_data:
 - **filename**: The name under which the image file will be saved.
 - **path**: The directory path where the image will be saved. If not specified, the image will be saved in the current directory.
 
-## Using via Web Requests 🌐
+## Using Telegram bot 💬
+We left the telegram bot code based on our library, you can find it in `TeleGPT`.
+
+> [!NOTE]
+> Change your bot token.
+
+## Using via Web Requests ✉️
 
 GPT4Zero also allows you to interact with the models via web requests.
 
