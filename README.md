@@ -145,6 +145,6 @@ This will launch a web-based GUI that you can use to interact with GPT4Zero more
 ## Credits 🙌
 
 - **Kandinsky** [Image Generator] - [fusionbrain.ai](https://fusionbrain.ai/)
-- **ChatGPT [0 id]** - [chatgptis.org](https://chatgptis.org/)
+- **ChatGPT [0 id]** - [toolbas.com](https://toolbaz.com/writer/chat-gpt-alternative)
 - **ChatGPT [1 id]** - [seoschmiede.at](https://seoschmiede.at/en/aitools/chatgpt-tool/)
-- **ChatGPT [2 id]** - [blackbox.ai](https://www.blackbox.ai/)
+- **ChatGPT [2 id]** - [toolbas.com](https://toolbaz.com/writer/chat-gpt-alternative) [ gemini ]
