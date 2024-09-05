@@ -1,6 +1,7 @@
 import requests
 import json
 import re
+import uuid
 
 def ask(question, bot_id=0):
     if bot_id == 1:
@@ -11,38 +12,40 @@ def ask(question, bot_id=0):
         return ask_gpt3_5_2(question)
 
 def ask_gpt3_5_2(question):
-    url = "https://ai-chats.org/chat/send2/"
+    session_id = str(uuid.uuid4())
+    
+    url = "https://data.toolbaz.com/writer.php"
     headers = {
-        "Accept": "application/json, text/event-stream",
-        "Content-Type": "application/json",
-        "Origin": "https://ai-chats.org",
-        "Referer": "https://ai-chats.org/chat/",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+        "connection": "keep-alive",
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "host": "data.toolbaz.com",
+        "origin": "https://toolbaz.com",
+        "referer": "https://toolbaz.com/",
+        "sec-ch-ua": '"Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Windows"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-site",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
     }
     
     data = {
-        "messagesHistory": [{"id": "683d7cc3-592f-4b3a-9648-1779c2d2c264", "from": "you", "content": question}],
-        "type": "chat"
+        "text": question,
+        "model": "gpt-4o-mini",
+        "session_id": session_id
     }
-
-    try:
-        response = requests.post(url, headers=headers, data=json.dumps(data))
-        response.raise_for_status()
-
-        response_text = response.text
-        # Извлекаем только текст из data
-        parsed_text = ''.join(
-            line.split(': ')[1]
-            for line in response_text.splitlines()
-            if line.startswith('data: ') and line.split(': ')[1].strip()
-        )
-        return parsed_text
-
-    except requests.exceptions.RequestException as e:
-        return f"Request error: {e}"
-    except ValueError:
-        return "Error decoding response"
-
+    
+    response = requests.post(url, headers=headers, data=data)
+    
+    response_text = response.text
+    clean_text = re.sub(r'\[.*?\]', '', response_text).strip()
+    
+    return clean_text
+    
 def ask_gpt3_5(question):
     url = "https://chatbot-ji1z.onrender.com/chatbot-ji1z"
     headers = {
