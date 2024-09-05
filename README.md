@@ -82,7 +82,7 @@ if image_data:
 - **path**: The directory path where the image will be saved. If not specified, the image will be saved in the current directory.
 
 ## Using Telegram bot 💬
-We left the telegram bot code based on our library, you can find it in `TeleGPT`.
+We left the telegram bot code based on our library, you can find it in `teleGPT`.
 
 > [!NOTE]
 > Change your bot token.
