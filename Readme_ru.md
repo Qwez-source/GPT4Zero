@@ -138,7 +138,8 @@ from GPT4Zero import WebGpt
 
 WebGpt.runGUI()
 ```
-Этот код запустит интерфейс для болле удобной работы с ChatGPT
+Этот код запустит интерфейс для более удобной работы с ChatGPT                                                                                                  
+также вы можете просто перейти на сайт https://pitch-hilarious-hall.glitch.me/ и работать с chatGPT там.
 
 > [!NOTE]
 > Код webui можно получить на этом репозитории.
