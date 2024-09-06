@@ -84,7 +84,7 @@ def ask():
     question = request.form.get('question', '')
     model = request.form.get('model', 'gpt3.5')
     
-    if model == 'gemeni':
+    if model == 'gemini':
         answer = ask_gemini(question)
     else:
         answer = ask_gpt3_5(question)
