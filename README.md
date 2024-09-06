@@ -2,6 +2,9 @@
 
 Welcome to **GPT4Zero**, a simplified alternative to GPT4Free!
 
+🇷🇺 - [Русский](https://github.com/Qwez-source/GPT4Zero/blob/main/Readme_ru.md)                                                                                                                 
+🇺🇸 - English
+
 ![logo](https://i.ibb.co/3SQqx9v/photo-2024-08-31-12-14-53.jpg)
 
 ## 📚 Table of Contents
