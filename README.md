@@ -39,7 +39,7 @@ print(CmdGpt_lib.ask(promt, bot_id=0))
 ### Parameters:
 - **message**: The message string you want to send to ChatGPT.
 - **bot_id**: An integer (0, 1, 2) specifying which ChatGPT instance to use:
-  - `0`: GPT 3
+  - `0`: Gemini 1-5 flash
   - `1`: GPT 3.5
   - `2`: Blackbox
  
