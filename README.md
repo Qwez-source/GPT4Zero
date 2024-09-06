@@ -140,7 +140,8 @@ from GPT4Zero import WebGpt
 
 WebGpt.runGUI()
 ```
-This will launch a web-based GUI that you can use to interact with GPT4Zero more easily.
+This will launch a web-based GUI that you can use to interact with GPT4Zero more easily.                                                                              
+You can also just go to https://pitch-hilarious-hall.glitch.me/ and work with chatGPT there.
 
 > [!NOTE]
 > You can get the site script from this repository.
