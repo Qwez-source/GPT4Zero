@@ -416,7 +416,9 @@
         }
 
         document.getElementById('clear-chat').addEventListener('click', function() {
-            document.getElementById('chat-box').innerHTML = '';
+            if (confirm('Are you sure you want to delete the chat? This action cannot be undone.')) {
+              document.getElementById('chat-box').innerHTML = '';
+            }
         });
     </script>
 </body>
