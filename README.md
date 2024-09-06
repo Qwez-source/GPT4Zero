@@ -39,9 +39,9 @@ print(CmdGpt_lib.ask(promt, bot_id=0))
 ### Parameters:
 - **message**: The message string you want to send to ChatGPT.
 - **bot_id**: An integer (0, 1, 2) specifying which ChatGPT instance to use:
-  - `0`: Gemini 1-5 flash
-  - `1`: GPT 3.5
-  - `2`: Blackbox
+  - `0`: GPT 3.5 [ 1 ]
+  - `1`: GPT 3.5 [ 2 ]
+  - `2`: Gemini 1-5 flash
  
 > [!TIP]
 >  Choose the appropriate bot_id based on the model you want to interact with. Each model offers different capabilities and performance levels.
@@ -145,6 +145,6 @@ This will launch a web-based GUI that you can use to interact with GPT4Zero more
 ## Credits 🙌
 
 - **Kandinsky** [Image Generator] - [fusionbrain.ai](https://fusionbrain.ai/)
-- **ChatGPT [0 id]** - [toolbas.com](https://toolbaz.com/writer/chat-gpt-alternative)
-- **ChatGPT [1 id]** - [seoschmiede.at](https://seoschmiede.at/en/aitools/chatgpt-tool/)
-- **ChatGPT [2 id]** - [toolbas.com](https://toolbaz.com/writer/chat-gpt-alternative) [ gemini ]
+- **GPT 3.5 [0 id]** - [toolbas.com](https://toolbaz.com/writer/chat-gpt-alternative)
+- **GPT 3.5 [1 id]** - [seoschmiede.at](https://seoschmiede.at/en/aitools/chatgpt-tool/)
+- **Gemini 1-5 flash [2 id]** - [toolbas.com](https://toolbaz.com/writer/chat-gpt-alternative)
