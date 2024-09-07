@@ -105,11 +105,11 @@ GPT4Zero also allows you to interact with the models via web requests.
 > You can get the script from the site on this repository.
 
 2. **Selecting a Model:**
-   - To choose a model, use the parameter `?model=gpt3_5` or `?model=transformerBB`:
+   - To choose a model, use the parameter `?model=gpt3_5` or `?model=gemini`:
      ```
      https://inquisitive-grizzly-conkerberry.glitch.me/?ask=your_prompt&model=model_name
      ```
-   - Replace `model_name` with either `gpt3_5` (default) or `transformerBB`.
+   - Replace `model_name` with either `gpt3_5` (default) or `gemini`.
 
 > [!TIP]
 > Choose the appropriate bot_id based on the model you want to interact with. Each model offers different capabilities and performance levels.
@@ -121,7 +121,7 @@ import requests
 
 # Define the prompt and model
 prompt = "What is the capital of France?"
-model = "transformerBB"  # or "gpt3_5" for default model
+model = "gemini"  # or "gpt3_5" for default model
 
 # Construct the URL
 url = f"https://inquisitive-grizzly-conkerberry.glitch.me/?ask={prompt}&model={model}"
